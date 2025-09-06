@@ -10,6 +10,11 @@ import SearchFilters from '@/components/rides/SearchFilters';
 import RideCard from '@/components/rides/RideCard';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * A page that allows users to search for available rides.
+ * It provides search filters and displays a list of matching rides.
+ * @returns The rendered page component.
+ */
 export default function SearchRides() {
   const [rides, setRides] = useState<Ride[]>([]);
   const [filteredRides, setFilteredRides] = useState<Ride[]>([]);

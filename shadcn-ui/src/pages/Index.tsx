@@ -1,4 +1,9 @@
 // This is a template for the welcome page, you must rewrite this file to your own homepage
+/**
+ * The main landing page of the application.
+ * It currently displays a welcome message.
+ * @returns The rendered page component.
+ */
 export default function WelcomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-6 text-center">

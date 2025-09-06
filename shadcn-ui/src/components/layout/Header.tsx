@@ -19,6 +19,13 @@ interface HeaderProps {
   onUserUpdate: (user: User | null) => void;
 }
 
+/**
+ * A header component that displays the application title, notification icon, and user menu.
+ * @param {HeaderProps} props - The component props.
+ * @param {User | null} props.user - The current user object.
+ * @param {function} props.onUserUpdate - A callback function to update the user state.
+ * @returns The rendered component.
+ */
 export default function Header({ user, onUserUpdate }: HeaderProps) {
   const [unreadCount, setUnreadCount] = useState(0);
 

@@ -12,6 +12,12 @@ interface SearchFiltersProps {
   onClear: () => void;
 }
 
+/**
+ * A component that provides a set of filters for searching for rides.
+ * It allows users to filter by location, date, cost, seats, and gender preference.
+ * @param {SearchFiltersProps} props - The component props.
+ * @returns The rendered component.
+ */
 export default function SearchFilters({ onSearch, onClear }: SearchFiltersProps) {
   const [criteria, setCriteria] = useState<SearchCriteria>({
     fromCity: '',

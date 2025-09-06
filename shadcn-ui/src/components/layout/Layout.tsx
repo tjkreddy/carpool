@@ -8,6 +8,13 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * A layout component that wraps the main content of the application.
+ * It includes a header and a bottom navigation bar.
+ * @param {LayoutProps} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render within the layout.
+ * @returns The rendered component.
+ */
 export default function Layout({ children }: LayoutProps) {
   const [user, setUser] = useState<User | null>(null);
 

@@ -19,6 +19,12 @@ const queryClient = new QueryClient();
 initializeDemoUser();
 initializeDemoData();
 
+/**
+ * The root component of the application.
+ * It sets up the query client, tooltip provider, toaster, and router.
+ * It also initializes demo data and wraps the application with an authentication guard.
+ * @returns The rendered application component.
+ */
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

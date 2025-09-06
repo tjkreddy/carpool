@@ -15,6 +15,13 @@ interface RideCardProps {
   onViewDetails?: (rideId: string) => void;
 }
 
+/**
+ * A component that displays a summary of a ride in a card format.
+ * It shows information about the driver, route, time, cost, and available seats.
+ * It can also display action buttons for joining, messaging, or viewing details.
+ * @param {RideCardProps} props - The component props.
+ * @returns The rendered component.
+ */
 export default function RideCard({ 
   ride, 
   showActions = false, 

@@ -12,6 +12,11 @@ import { getCurrentUser, updateProfile, getCollegeById } from '@/lib/auth';
 import { ridesStorage, ratingsStorage } from '@/lib/storage';
 import { User as UserType, Rating } from '@/types';
 
+/**
+ * A page that displays and allows editing of the user's profile.
+ * It shows user information, activity stats, and recent reviews.
+ * @returns The rendered page component.
+ */
 export default function Profile() {
   const [user, setUser] = useState<UserType | null>(null);
   const [editing, setEditing] = useState(false);

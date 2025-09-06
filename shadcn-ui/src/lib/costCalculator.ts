@@ -8,6 +8,11 @@ export interface CostCalculationParams {
   includeDriverInSplit?: boolean;
 }
 
+/**
+ * Calculates the cost breakdown for a ride.
+ * @param params - The parameters for the cost calculation.
+ * @returns A cost breakdown object.
+ */
 export const calculateRideCost = (params: CostCalculationParams): CostBreakdown => {
   const { totalCost, driverId, passengerIds, includeDriverInSplit = false } = params;
   
@@ -51,6 +56,14 @@ export const calculateRideCost = (params: CostCalculationParams): CostBreakdown 
   };
 };
 
+/**
+ * Calculates the cost of a ride based on distance.
+ * @param distanceKm - The distance of the ride in kilometers.
+ * @param fuelEfficiencyKmPerLiter - The fuel efficiency of the vehicle in km/l.
+ * @param fuelPricePerLiter - The price of fuel per liter.
+ * @param additionalCostsPerKm - Additional costs per kilometer (e.g., maintenance).
+ * @returns The calculated cost.
+ */
 export const calculateDistanceBasedCost = (
   distanceKm: number,
   fuelEfficiencyKmPerLiter: number = 12,
@@ -62,6 +75,12 @@ export const calculateDistanceBasedCost = (
   return Math.round((fuelCost + additionalCosts) * 100) / 100;
 };
 
+/**
+ * Calculates the cost of a ride based on time.
+ * @param durationMinutes - The duration of the ride in minutes.
+ * @param costPerHour - The cost per hour of the driver's time.
+ * @returns The calculated cost.
+ */
 export const calculateTimeBasedCost = (
   durationMinutes: number,
   costPerHour: number = 10
@@ -70,6 +89,14 @@ export const calculateTimeBasedCost = (
   return Math.round(hours * costPerHour * 100) / 100;
 };
 
+/**
+ * Calculates a suggested price for a ride.
+ * @param distanceKm - The distance of the ride in kilometers.
+ * @param durationMinutes - The duration of the ride in minutes.
+ * @param numberOfSeats - The number of available seats.
+ * @param options - Optional parameters for the calculation.
+ * @returns The suggested price per seat.
+ */
 export const calculateSuggestedPrice = (
   distanceKm: number,
   durationMinutes: number,
@@ -103,15 +130,27 @@ export const calculateSuggestedPrice = (
   return Math.round(costPerSeat * 100) / 100;
 };
 
+/**
+ * Formats a number as a currency string.
+ * @param amount - The amount to format.
+ * @param currency - The currency to use for formatting (defaults to 'USD').
+ * @returns The formatted currency string.
+ */
 export const formatCurrency = (amount: number, currency: string = 'USD'): string => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
 };
 
+/**
+ * Calculates the savings from sharing a ride.
+ * @param originalCost - The original cost of the ride.
+ * @param sharedCost - The cost after sharing.
+ * @returns An object containing the savings and the percentage saved.
+ */
 export const calculateSavings = (
   originalCost: number,
   sharedCost: number
@@ -125,7 +164,13 @@ export const calculateSavings = (
   };
 };
 
-// Payment method helpers for manual payments (no integration)
+/**
+ * Generates payment instructions for a passenger.
+ * @param driverName - The name of the driver.
+ * @param passengerName - The name of the passenger.
+ * @param amount - The amount to be paid.
+ * @returns A string with payment instructions.
+ */
 export const getPaymentInstructions = (
   driverName: string,
   passengerName: string,
@@ -135,6 +180,12 @@ export const getPaymentInstructions = (
 Payment methods: Cash, Venmo, Zelle, or other agreed method.`;
 };
 
+/**
+ * Generates a payment summary for a ride.
+ * @param costBreakdown - The cost breakdown for the ride.
+ * @param driverName - The name of the driver.
+ * @returns A string with the payment summary.
+ */
 export const generatePaymentSummary = (costBreakdown: CostBreakdown, driverName: string): string => {
   const { passengerShares, costPerSeat } = costBreakdown;
   

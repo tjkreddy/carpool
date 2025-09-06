@@ -4,6 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import RideOfferForm from '@/components/rides/RideOfferForm';
 import RideRequestForm from '@/components/rides/RideRequestForm';
 
+/**
+ * A page that allows users to either offer a ride or request a ride.
+ * It uses tabs to switch between the two forms.
+ * @returns The rendered page component.
+ */
 export default function CreateRide() {
   const navigate = useNavigate();
 
