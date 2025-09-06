@@ -13,6 +13,12 @@ interface LoginFormProps {
   onLogin: (user: User) => void;
 }
 
+/**
+ * A component that provides a login and registration form for users.
+ * @param {LoginFormProps} props - The component props.
+ * @param {function} props.onLogin - A callback function that is called when the user successfully logs in or registers.
+ * @returns The rendered component.
+ */
 export default function LoginForm({ onLogin }: LoginFormProps) {
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',

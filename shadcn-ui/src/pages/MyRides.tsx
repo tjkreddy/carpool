@@ -10,6 +10,11 @@ import { User, Ride, RideRequest } from '@/types';
 import RideCard from '@/components/rides/RideCard';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * A page that displays the user's rides, categorized into "offered", "joined", and "requests".
+ * It allows users to manage their rides and view their ride requests.
+ * @returns The rendered page component.
+ */
 export default function MyRides() {
   const [user, setUser] = useState<User | null>(null);
   const [myRides, setMyRides] = useState<Ride[]>([]);

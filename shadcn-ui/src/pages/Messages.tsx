@@ -10,6 +10,11 @@ import { messagesStorage, ridesStorage } from '@/lib/storage';
 import { generateId } from '@/lib/auth';
 import { User, Message, Ride, ChatConversation } from '@/types';
 
+/**
+ * A page that displays a user's messages and allows them to chat with other users.
+ * It shows a list of conversations and a chat window for the selected conversation.
+ * @returns The rendered page component.
+ */
 export default function Messages() {
   const [user, setUser] = useState<User | null>(null);
   const [conversations, setConversations] = useState<ChatConversation[]>([]);

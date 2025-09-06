@@ -16,6 +16,11 @@ import { User, Ride } from "@/types";
 import RideCard from "@/components/rides/RideCard";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * The main dashboard page for authenticated users.
+ * It displays a welcome message, user stats, quick actions, nearby rides, and safety tips.
+ * @returns The rendered page component.
+ */
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [nearbyRides, setNearbyRides] = useState<Ride[]>([]);

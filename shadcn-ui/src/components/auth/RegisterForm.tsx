@@ -11,6 +11,12 @@ interface RegisterFormProps {
   onRegister: (user: User) => void;
 }
 
+/**
+ * A component that provides a form for new users to register.
+ * @param {RegisterFormProps} props - The component props.
+ * @param {function} props.onRegister - A callback function that is called when the user successfully registers.
+ * @returns The rendered component.
+ */
 export default function RegisterForm({ onRegister }: RegisterFormProps) {
   const [registerData, setRegisterData] = useState<RegisterData>({
     email: '',

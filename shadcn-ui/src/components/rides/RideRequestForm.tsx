@@ -17,6 +17,12 @@ interface RideRequestFormProps {
   onCancel: () => void;
 }
 
+/**
+ * A component that provides a form for users to request a ride.
+ * It collects details about the desired route, time, and cost.
+ * @param {RideRequestFormProps} props - The component props.
+ * @returns The rendered component.
+ */
 export default function RideRequestForm({ onSuccess, onCancel }: RideRequestFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

@@ -56,19 +56,37 @@ const COLLEGES = [
 ];
 
 // Utility functions
+/**
+ * Generates a unique ID.
+ * @returns A unique ID string.
+ */
 export const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
 
+/**
+ * Generates a mock authentication token.
+ * @returns A base64 encoded token string.
+ */
 export const generateToken = (): string => {
   return btoa(generateId() + ':' + Date.now());
 };
 
+/**
+ * Validates an email address format.
+ * @param email - The email address to validate.
+ * @returns True if the email format is valid, false otherwise.
+ */
 export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
+/**
+ * Validates if an email address belongs to a supported college.
+ * @param email - The email address to validate.
+ * @returns True if the email is a valid college email, false otherwise.
+ */
 export const validateCollegeEmail = (email: string): boolean => {
   if (!validateEmail(email)) return false;
   
@@ -76,14 +94,28 @@ export const validateCollegeEmail = (email: string): boolean => {
   return VALID_COLLEGE_DOMAINS.includes(domain);
 };
 
+/**
+ * Gets college information by domain.
+ * @param domain - The college's email domain.
+ * @returns The college object or undefined if not found.
+ */
 export const getCollegeByDomain = (domain: string) => {
   return COLLEGES.find(college => college.domain === domain);
 };
 
+/**
+ * Gets college information by ID.
+ * @param id - The college's ID.
+ * @returns The college object or undefined if not found.
+ */
 export const getCollegeById = (id: string) => {
   return COLLEGES.find(college => college.id === id);
 };
 
+/**
+ * Gets a list of all active colleges.
+ * @returns An array of active college objects.
+ */
 export const getAllColleges = () => {
   return COLLEGES.filter(college => college.isActive);
 };
@@ -108,7 +140,11 @@ const findUserById = (id: string): User | null => {
   return users.find(user => user.id === id) || null;
 };
 
-// Authentication functions
+/**
+ * Registers a new user.
+ * @param userData - The user registration data.
+ * @returns A promise that resolves with the authentication response.
+ */
 export const register = async (userData: RegisterData): Promise<AuthResponse> => {
   // Validate email
   if (!validateCollegeEmail(userData.email)) {
@@ -164,6 +200,11 @@ export const register = async (userData: RegisterData): Promise<AuthResponse> =>
   };
 };
 
+/**
+ * Logs in a user.
+ * @param loginData - The user login data.
+ * @returns A promise that resolves with the authentication response.
+ */
 export const login = async (loginData: LoginData): Promise<AuthResponse> => {
   // Find user
   const user = findUserByEmail(loginData.email);
@@ -194,21 +235,39 @@ export const login = async (loginData: LoginData): Promise<AuthResponse> => {
   };
 };
 
+/**
+ * Logs out the current user.
+ * @returns A promise that resolves when the user is logged out.
+ */
 export const logout = async (): Promise<void> => {
   userStorage.removeUser();
   userStorage.removeToken();
 };
 
+/**
+ * Gets the currently authenticated user.
+ * @returns The current user object or null if not authenticated.
+ */
 export const getCurrentUser = (): User | null => {
   return userStorage.getUser();
 };
 
+/**
+ * Checks if a user is currently authenticated.
+ * @returns True if a user is authenticated, false otherwise.
+ */
 export const isAuthenticated = (): boolean => {
   const user = userStorage.getUser();
   const token = userStorage.getToken();
   return !!(user && token);
 };
 
+/**
+ * Updates a user's profile.
+ * @param userId - The ID of the user to update.
+ * @param updates - An object with the fields to update.
+ * @returns A promise that resolves with the updated user object.
+ */
 export const updateProfile = async (userId: string, updates: Partial<User>): Promise<User> => {
   const users = getUsersFromStorage();
   const userIndex = users.findIndex(u => u.id === userId);
@@ -235,12 +294,22 @@ export const updateProfile = async (userId: string, updates: Partial<User>): Pro
   return updatedUser;
 };
 
+/**
+ * Verifies a user's email address (mock implementation).
+ * @param token - The verification token.
+ * @returns A promise that resolves to true.
+ */
 export const verifyEmail = async (token: string): Promise<boolean> => {
   // In a real app, this would verify the token with the backend
   // For MVP, we'll just return true
   return true;
 };
 
+/**
+ * Refreshes an authentication token (mock implementation).
+ * @param refreshToken - The refresh token.
+ * @returns A promise that resolves with a new access token.
+ */
 export const refreshToken = async (refreshToken: string): Promise<string> => {
   // In a real app, this would validate the refresh token and return a new access token
   // For MVP, we'll just generate a new token
@@ -249,7 +318,9 @@ export const refreshToken = async (refreshToken: string): Promise<string> => {
   return newToken;
 };
 
-// Initialize demo user for testing
+/**
+ * Initializes a demo user for testing purposes if no users exist.
+ */
 export const initializeDemoUser = (): void => {
   const existingUsers = getUsersFromStorage();
   

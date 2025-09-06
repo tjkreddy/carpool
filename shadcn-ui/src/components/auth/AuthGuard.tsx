@@ -8,6 +8,14 @@ interface AuthGuardProps {
   children: React.ReactNode;
 }
 
+/**
+ * A component that guards routes, ensuring a user is authenticated before rendering its children.
+ * If the user is not authenticated, it displays a login form.
+ * For demo purposes, it can auto-login a demo user.
+ * @param {AuthGuardProps} props - The component props.
+ * @param {React.ReactNode} props.children - The child components to render if authenticated.
+ * @returns The rendered component.
+ */
 export default function AuthGuard({ children }: AuthGuardProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);

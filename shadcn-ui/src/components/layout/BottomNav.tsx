@@ -11,6 +11,11 @@ const navItems = [
   { id: 'profile', label: 'Profile', icon: User, path: '/profile' },
 ];
 
+/**
+ * A bottom navigation bar component for mobile views.
+ * It displays navigation items and highlights the active one based on the current route.
+ * @returns The rendered component.
+ */
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
