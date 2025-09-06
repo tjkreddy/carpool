@@ -1,0 +1,91 @@
+sequenceDiagram
+    participant U as User
+    participant FE as Frontend
+    participant API as API Gateway
+    participant AUTH as AuthService
+    participant RS as RideService
+    participant MS as MessageService
+    participant NS as NotificationService
+    participant DB as Database
+    participant WS as WebSocket Server
+    participant EXT as External APIs
+
+    Note over U, EXT: User Registration & Authentication Flow
+    U->>FE: Enter college email and password
+    FE->>API: POST /api/auth/register
+    API->>AUTH: register(userData)
+    AUTH->>DB: INSERT INTO users
+    AUTH->>EXT: Send verification email
+    AUTH-->>API: Return user data
+    API-->>FE: Return auth response
+    FE-->>U: Show verification required
+
+    U->>FE: Click email verification link
+    FE->>API: GET /api/auth/verify/:token
+    API->>AUTH: verifyEmail(token)
+    AUTH->>DB: UPDATE users SET isVerified = true
+    AUTH-->>API: Return success
+    API-->>FE: Return verification success
+    FE-->>U: Show dashboard
+
+    Note over U, EXT: Ride Creation Flow
+    U->>FE: Fill ride offer form
+    FE->>EXT: Get location coordinates
+    EXT-->>FE: Return lat/lng
+    FE->>API: POST /api/rides
+    API->>RS: createRide(rideData)
+    RS->>DB: INSERT INTO rides
+    RS->>NS: Create ride notifications
+    NS->>DB: INSERT INTO notifications
+    NS->>WS: Broadcast new ride
+    WS-->>FE: Notify interested users
+    RS-->>API: Return ride data
+    API-->>FE: Return created ride
+    FE-->>U: Show ride created success
+
+    Note over U, EXT: Ride Search & Booking Flow
+    U->>FE: Search for rides
+    FE->>API: GET /api/rides/search?params
+    API->>RS: searchRides(criteria)
+    RS->>DB: SELECT FROM rides WHERE conditions
+    RS-->>API: Return matching rides
+    API-->>FE: Return search results
+    FE-->>U: Display available rides
+
+    U->>FE: Request to join ride
+    FE->>API: POST /api/rides/:id/requests
+    API->>RS: requestToJoin(rideId, userId)
+    RS->>DB: INSERT INTO ride_requests
+    RS->>NS: Notify driver
+    NS->>WS: Send real-time notification
+    WS-->>FE: Update driver's notifications
+    RS-->>API: Return request data
+    API-->>FE: Return request success
+    FE-->>U: Show request sent
+
+    Note over U, EXT: Real-time Messaging Flow
+    U->>FE: Send message
+    FE->>WS: Emit message event
+    WS->>MS: sendMessage(messageData)
+    MS->>DB: INSERT INTO messages
+    MS->>WS: Broadcast to recipient
+    WS-->>FE: Deliver message
+    FE-->>U: Show message delivered
+
+    Note over U, EXT: Ride Completion & Rating Flow
+    U->>FE: Complete ride
+    FE->>API: PUT /api/rides/:id/complete
+    API->>RS: updateRide(rideId, {status: 'completed'})
+    RS->>DB: UPDATE rides SET status = 'completed'
+    RS->>NS: Send rating reminders
+    NS->>WS: Notify participants
+    RS-->>API: Return updated ride
+    API-->>FE: Return completion success
+    FE-->>U: Show rating prompt
+
+    U->>FE: Submit rating
+    FE->>API: POST /api/ratings
+    API->>DB: INSERT INTO ratings
+    API->>DB: UPDATE user ratings
+    API-->>FE: Return rating success
+    FE-->>U: Show thank you message
