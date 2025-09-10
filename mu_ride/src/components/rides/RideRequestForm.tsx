@@ -95,18 +95,25 @@ export default function RideRequestForm({
         .insert({
           driver_id: user.id, // For requests, this represents the requester
           type: "request",
-          from_location: formData.fromLocation.address,
-          to_location: formData.toLocation.address,
+          from_address: formData.fromLocation.address,
+          from_city: formData.fromLocation.city || "",
+          from_state: formData.fromLocation.state || "",
+          to_address: formData.toLocation.address,
+          to_city: formData.toLocation.city || "",
+          to_state: formData.toLocation.state || "",
           from_latitude: null, // Will be updated with geocoding later
           from_longitude: null,
           to_latitude: null,
           to_longitude: null,
-          departure_time: formData.departureTime,
+          departure_time: formData.departureTime.toISOString(),
           available_seats: formData.availableSeats, // Number of seats needed
           cost_per_seat: formData.costPerSeat, // Maximum willing to pay
           description: formData.description,
           status: "active",
-          preferences: formData.preferences,
+          smoking_allowed: formData.preferences.smokingAllowed,
+          pets_allowed: formData.preferences.petsAllowed,
+          music_allowed: formData.preferences.musicAllowed,
+          gender_preference: formData.preferences.genderPreference,
         })
         .select()
         .single();
