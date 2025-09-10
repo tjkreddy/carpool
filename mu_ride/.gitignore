@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Supabase SQL scripts
-supabase/**/*.sql
+*.sql
